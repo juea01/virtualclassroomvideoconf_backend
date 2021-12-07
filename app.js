@@ -5,11 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var http = require('http');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var product = require('./routes/product');
-var order = require('./routes/order');
 var auth = require('./routes/auth');
 var room = require('./routes/room');
 
@@ -30,13 +25,6 @@ const peerServer = ExpressPeerServer (server, {
   debug: true,
 });
 
-//Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://m001-student:m001-mongodb-basics@sandbox.hjk9s.mongodb.net/eworld_trade?retryWrites=true&w=majority';
-mongoose.connect(mongoDB,{useNewUrlParser: true, useUnifiedTopology: true});
-var db = mongoose.connection;
-//mongoose.set('debug',true);
-db.on('error',console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,10 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/product',product);
-app.use('/orders',order);
+
 app.use('/login',auth);
 app.use('/room',room);
 app.use('/peerjs', peerServer);
